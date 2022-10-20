@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5e290b14-0697-44a2-a360-5af46416641d}</ProjectGuid>
+    <RootNamespace>MediaFundamentalsProject1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>fmod_vc.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="FModHandler.cpp" />
+    <ClCompile Include="glad.c" />
+    <ClCompile Include="inc\imgui\imgui.cpp" />
+    <ClCompile Include="inc\imgui\imgui_demo.cpp" />
+    <ClCompile Include="inc\imgui\imgui_draw.cpp" />
+    <ClCompile Include="inc\imgui\imgui_tables.cpp" />
+    <ClCompile Include="inc\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="UI\SoundUI\SoundUI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FModHandler.h" />
+    <ClInclude Include="inc\FMOD\fmod.h" />
+    <ClInclude Include="inc\FMOD\fmod.hpp" />
+    <ClInclude Include="inc\FMOD\fmod_codec.h" />
+    <ClInclude Include="inc\FMOD\fmod_common.h" />
+    <ClInclude Include="inc\FMOD\fmod_dsp.h" />
+    <ClInclude Include="inc\FMOD\fmod_dsp_effects.h" />
+    <ClInclude Include="inc\FMOD\fmod_errors.h" />
+    <ClInclude Include="inc\FMOD\fmod_output.h" />
+    <ClInclude Include="inc\freetype\config\ftconfig.h" />
+    <ClInclude Include="inc\freetype\config\ftheader.h" />
+    <ClInclude Include="inc\freetype\config\ftmodule.h" />
+    <ClInclude Include="inc\freetype\config\ftoption.h" />
+    <ClInclude Include="inc\freetype\config\ftstdlib.h" />
+    <ClInclude Include="inc\freetype\freetype.h" />
+    <ClInclude Include="inc\freetype\ftadvanc.h" />
+    <ClInclude Include="inc\freetype\ftbbox.h" />
+    <ClInclude Include="inc\freetype\ftbdf.h" />
+    <ClInclude Include="inc\freetype\ftbitmap.h" />
+    <ClInclude Include="inc\freetype\ftbzip2.h" />
+    <ClInclude Include="inc\freetype\ftcache.h" />
+    <ClInclude Include="inc\freetype\ftchapters.h" />
+    <ClInclude Include="inc\freetype\ftcid.h" />
+    <ClInclude Include="inc\freetype\ftdriver.h" />
+    <ClInclude Include="inc\freetype\fterrdef.h" />
+    <ClInclude Include="inc\freetype\fterrors.h" />
+    <ClInclude Include="inc\freetype\ftfntfmt.h" />
+    <ClInclude Include="inc\freetype\ftgasp.h" />
+    <ClInclude Include="inc\freetype\ftglyph.h" />
+    <ClInclude Include="inc\freetype\ftgxval.h" />
+    <ClInclude Include="inc\freetype\ftgzip.h" />
+    <ClInclude Include="inc\freetype\ftimage.h" />
+    <ClInclude Include="inc\freetype\ftincrem.h" />
+    <ClInclude Include="inc\freetype\ftlcdfil.h" />
+    <ClInclude Include="inc\freetype\ftlist.h" />
+    <ClInclude Include="inc\freetype\ftlzw.h" />
+    <ClInclude Include="inc\freetype\ftmac.h" />
+    <ClInclude Include="inc\freetype\ftmm.h" />
+    <ClInclude Include="inc\freetype\ftmodapi.h" />
+    <ClInclude Include="inc\freetype\ftmoderr.h" />
+    <ClInclude Include="inc\freetype\ftotval.h" />
+    <ClInclude Include="inc\freetype\ftoutln.h" />
+    <ClInclude Include="inc\freetype\ftparams.h" />
+    <ClInclude Include="inc\freetype\ftpfr.h" />
+    <ClInclude Include="inc\freetype\ftrender.h" />
+    <ClInclude Include="inc\freetype\ftsizes.h" />
+    <ClInclude Include="inc\freetype\ftsnames.h" />
+    <ClInclude Include="inc\freetype\ftstroke.h" />
+    <ClInclude Include="inc\freetype\ftsynth.h" />
+    <ClInclude Include="inc\freetype\ftsystem.h" />
+    <ClInclude Include="inc\freetype\fttrigon.h" />
+    <ClInclude Include="inc\freetype\fttypes.h" />
+    <ClInclude Include="inc\freetype\ftwinfnt.h" />
+    <ClInclude Include="inc\freetype\t1tables.h" />
+    <ClInclude Include="inc\freetype\ttnameid.h" />
+    <ClInclude Include="inc\freetype\tttables.h" />
+    <ClInclude Include="inc\freetype\tttags.h" />
+    <ClInclude Include="inc\glad\glad.h" />
+    <ClInclude Include="inc\GLFW\glfw3.h" />
+    <ClInclude Include="inc\GLFW\glfw3native.h" />
+    <ClInclude Include="inc\imgui\imconfig.h" />
+    <ClInclude Include="inc\imgui\imgui.h" />
+    <ClInclude Include="inc\imgui\imgui_internal.h" />
+    <ClInclude Include="inc\imgui\imstb_rectpack.h" />
+    <ClInclude Include="inc\imgui\imstb_textedit.h" />
+    <ClInclude Include="inc\imgui\imstb_truetype.h" />
+    <ClInclude Include="inc\KHR\khrplatform.h" />
+    <ClInclude Include="UI\SoundUI\SoundUI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
+    <None Include="inc\FMOD\fmod.cs" />
+    <None Include="inc\FMOD\fmod_dsp.cs" />
+    <None Include="inc\FMOD\fmod_errors.cs" />
+    <None Include="lib\x64\fmod.dll" />
+    <None Include="lib\x64\fmodL.dll" />
+    <None Include="lib\x64\glfw3.dll" />
+    <None Include="lib\x64\glfw3.pdb" />
+    <None Include="lib\x86\fmod.dll" />
+    <None Include="lib\x86\fmodL.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\x64\fmodL_vc.lib" />
+    <Library Include="lib\x64\fmod_vc.lib" />
+    <Library Include="lib\x64\glfw3.lib" />
+    <Library Include="lib\x64\glfw3dll.lib" />
+    <Library Include="lib\x86\fmodL_vc.lib" />
+    <Library Include="lib\x86\fmod_vc.lib" />
+    <Library Include="lib\x86\libfmod.a" />
+    <Library Include="lib\x86\libfmodL.a" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
