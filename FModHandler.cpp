@@ -40,10 +40,10 @@ bool FModHandler::CreateChannelGroup(const std::string& name)
 		return false;
 	}
 
-	auto* our_channel_group_with_extra_params = new ChannelGroup();
-	our_channel_group_with_extra_params->grp_ptr = channel_group;
+	auto* newChannelGroup = new ChannelGroup();
+	newChannelGroup->grp_ptr = channel_group;
 
-	channelGroups.try_emplace(name, our_channel_group_with_extra_params);
+	channelGroups.try_emplace(name, newChannelGroup);
 
 	return true;
 }
@@ -56,6 +56,29 @@ bool FModHandler::FindChannelGroup(const std::string& name, ChannelGroup** chann
 
 	*channelGroup = iterator->second;
 	
+	return true;
+}
+
+bool FModHandler::RemoveChannelGroup(const std::string& name)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+
+	iterator->second->grp_ptr->release();
+	channelGroups.erase(iterator);
+}
+
+bool FModHandler::SetChannelGroupParent(const std::string& childName, const std::string& parentName)
+{
+	const auto childGroup = channelGroups.find(childName);
+	const auto parentGroup = channelGroups.find(parentName);
+
+	if (childGroup == channelGroups.end() || parentGroup == channelGroups.end())
+		return false;
+
+	fResult = parentGroup->second->grp_ptr->addGroup(childGroup->second->grp_ptr);
+
 	return true;
 }
 
@@ -75,6 +98,26 @@ bool FModHandler::SetChannelGroupVolume(const std::string& name, float volume)
 		return false;
 
 	return ErrorCheck(iterator->second->grp_ptr->setVolume(volume));
+}
+
+bool FModHandler::GetChannelGroupPan(const std::string& name, float* pan)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+
+	*pan = iterator->second->current_pan;
+
+	return true;
+}
+
+bool FModHandler::SetChannelGroupPan(const std::string& name, float pan)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+
+	return ErrorCheck(iterator->second->grp_ptr->setPan(pan));
 }
 
 bool FModHandler::GetChannelGroupEnabled(const std::string& name, bool* enabled)
@@ -102,7 +145,6 @@ bool FModHandler::SetChannelGroupEnabled(const std::string& name, bool enabled)
 
 	return true;
 }
-
 
 bool FModHandler::CreateSound(const std::string& name, const std::string& path, const int mode)
 {
@@ -135,14 +177,67 @@ bool FModHandler::PlaySound(const std::string& sound_name, const std::string& ch
 		return false;
 	}
 
-	//more stuff to come here next class
-
 	fResult = (*channel).setPaused(false);
 	if (!ErrorCheck())
 	{
 		return false;
 	}
 
+	return true;
+}
+
+bool FModHandler::CreateDsp(const std::string& name, FMOD_DSP_TYPE dspType, const float value) 
+{
+	FMOD::DSP* dsp;
+
+	if (!ErrorCheck(system->createDSPByType(dspType, &dsp)))
+		return false;
+
+	if (!ErrorCheck(dsp->setParameterFloat(0, value)))
+		return false;
+
+	dsps.try_emplace(name, dsp);
+	return true;
+}
+
+bool FModHandler::GetDsp(const std::string& name, FMOD::DSP** dsp)
+{
+	const auto dspEffectIterator = dsps.find(name);
+	if (dspEffectIterator == dsps.end())
+		return false;
+
+	*dsp = dspEffectIterator->second;
+	return true;
+}
+
+bool FModHandler::AddDspEffect(const std::string& channelGroupName, const std::string& effectName)
+{
+	const auto channelGroupIterator = channelGroups.find(channelGroupName);
+	const auto dspEffectIterator = dsps.find(effectName);
+
+	if (channelGroupIterator == channelGroups.end() || dspEffectIterator == dsps.end())
+		return false;
+
+	int numDsp;
+	if (!ErrorCheck(channelGroupIterator->second->grp_ptr->getNumDSPs(&numDsp)))
+		return false;
+
+	if (!ErrorCheck(channelGroupIterator->second->grp_ptr->addDSP(numDsp, dspEffectIterator->second)))
+		return false;
+
+	return true;
+}
+
+bool FModHandler::RemoveDspEffect(const std::string& channelGroupName, const std::string& effectName)
+{
+	const auto channelGroupIterator = channelGroups.find(channelGroupName);
+	const auto dspEffectIterator = dsps.find(effectName);
+
+	if (channelGroupIterator == channelGroups.end() || dspEffectIterator == dsps.end())
+		return false;
+
+	if (!ErrorCheck(channelGroupIterator->second->grp_ptr->removeDSP(dspEffectIterator->second)))
+		return false;
 	return true;
 }
 
