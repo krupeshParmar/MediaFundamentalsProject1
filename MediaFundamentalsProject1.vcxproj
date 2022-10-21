@@ -150,6 +150,9 @@
   <ItemGroup>
     <ClCompile Include="FModHandler.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="inc\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="inc\imgui\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="inc\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="inc\imgui\imgui.cpp" />
     <ClCompile Include="inc\imgui\imgui_demo.cpp" />
     <ClCompile Include="inc\imgui\imgui_draw.cpp" />
@@ -219,6 +222,9 @@
     <ClInclude Include="inc\glad\glad.h" />
     <ClInclude Include="inc\GLFW\glfw3.h" />
     <ClInclude Include="inc\GLFW\glfw3native.h" />
+    <ClInclude Include="inc\imgui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="inc\imgui\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="inc\imgui\backends\imgui_impl_win32.h" />
     <ClInclude Include="inc\imgui\imconfig.h" />
     <ClInclude Include="inc\imgui\imgui.h" />
     <ClInclude Include="inc\imgui\imgui_internal.h" />

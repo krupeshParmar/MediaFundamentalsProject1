@@ -48,6 +48,61 @@ bool FModHandler::CreateChannelGroup(const std::string& name)
 	return true;
 }
 
+bool FModHandler::FindChannelGroup(const std::string& name, ChannelGroup** channelGroup)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+
+	*channelGroup = iterator->second;
+	
+	return true;
+}
+
+bool FModHandler::GetChannelGroupVolume(const std::string& name, float* volume)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+
+	return ErrorCheck(iterator->second->grp_ptr->getVolume(volume));
+}
+
+bool FModHandler::SetChannelGroupVolume(const std::string& name, float volume)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+
+	return ErrorCheck(iterator->second->grp_ptr->setVolume(volume));
+}
+
+bool FModHandler::GetChannelGroupEnabled(const std::string& name, bool* enabled)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+
+	if (!ErrorCheck(iterator->second->grp_ptr->getMute(enabled)))
+		return false;
+
+	*enabled = !(*enabled);
+
+	return true;
+}
+
+bool FModHandler::SetChannelGroupEnabled(const std::string& name, bool enabled)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+
+	if (!ErrorCheck(iterator->second->grp_ptr->setMute(!enabled)))
+		return false;
+
+	return true;
+}
+
 
 bool FModHandler::CreateSound(const std::string& name, const std::string& path, const int mode)
 {
