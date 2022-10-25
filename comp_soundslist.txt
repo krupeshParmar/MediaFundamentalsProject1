@@ -1,0 +1,12 @@
+mus mario_surface.mp3 surface
+mus mario_underground.mp3 underground
+mus mario_water.mp3 water
+sfx mario_03.mp3 surface
+sfx mario_04.mp3 surface
+sfx mario_06.mp3 surface
+sfx mario_09.mp3 underground
+sfx mario_12.mp3 underground
+sfx mario_14.mp3 underground
+sfx splash.mp3 water
+sfx mario_13.mp3 water
+sfx bubblePop.mp3 water
