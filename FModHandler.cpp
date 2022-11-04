@@ -187,7 +187,7 @@ bool FModHandler::FindChannelGroup(const std::string& name, ChannelGroup** chann
 		return false;
 
 	*channelGroup = iterator->second;
-	
+
 	return true;
 }
 
@@ -273,6 +273,30 @@ bool FModHandler::SetChannelGroupPitch(const std::string& name, float pitch)
 	return ErrorCheck(iterator->second->grp_ptr->setPitch(pitch));
 }
 
+bool FModHandler::GetChannelGroupFrequency(const std::string& name, float* frequency)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+	FMOD::Channel* channel;
+	iterator->second->grp_ptr->getChannel(0, &channel);
+	channel->getFrequency(frequency);
+
+	return true;
+}
+
+bool FModHandler::SetChannelGroupFrequency(const std::string& name, float frequency)
+{
+	const auto iterator = channelGroups.find(name);
+	if (iterator == channelGroups.end())
+		return false;
+	FMOD::Channel* channel;
+	iterator->second->grp_ptr->getChannel(0, &channel);
+	channel->setFrequency(frequency);
+
+	return true;
+}
+
 bool FModHandler::GetChannelGroupEnabled(const std::string& name, bool* enabled)
 {
 	const auto iterator = channelGroups.find(name);
@@ -339,7 +363,7 @@ bool FModHandler::PlaySound(const std::string& sound_name, const std::string& ch
 	return true;
 }
 
-bool FModHandler::GetSoundData(const std::string& soundName, std::string* data)
+bool FModHandler::GetSoundData(const std::string& soundName, std::string& channelName, std::string* data)
 {
 	const auto sound_iterator = sounds.find(soundName);
 
@@ -353,8 +377,8 @@ bool FModHandler::GetSoundData(const std::string& soundName, std::string* data)
 		std::cout << "\nCouldn't retrieve Name";
 		return false;
 	}
-	*data += "\nName: " + std::string(name);
-	delete [] name;
+	*data += "\n\n\tName: " + std::string(name);
+	delete[] name;
 
 	FMOD_SOUND_FORMAT format;
 	FMOD_SOUND_TYPE type;
@@ -365,19 +389,59 @@ bool FModHandler::GetSoundData(const std::string& soundName, std::string* data)
 		std::cout << "\nCouldn't retrieve Format";
 		return false;
 	}
-	*data += "\nFormat: " + GetFormatInString(format);
-	*data += "\nType: " + GetTypeInString(type);
+	*data += "\n\n\tFormat: " + GetFormatInString(format);
+	*data += "\n\n\tType: " + GetTypeInString(type);
 	float frequency;
-	fResult = sound_iterator->second->getDefaults(&frequency,NULL);
-	*data += "\nFrequency: " + std::to_string(frequency);
+	fResult = sound_iterator->second->getDefaults(&frequency, NULL);
+	*data += "\n\n\tFrequency: " + std::to_string(frequency);
+
 	unsigned int length;
+	const auto channelGroupIterator = channelGroups.find(channelName);
+
+	if (channelGroupIterator == channelGroups.end())
+		return false;
+	FMOD::Channel* channel;
+
+	channelGroupIterator->second->grp_ptr->getChannel(0, &channel);
+
+	unsigned int pos;
+	channel->getPosition(&pos, FMOD_TIMEUNIT_MS);
+	int minutes = (pos / 1000) / 60;
+	int seconds = (pos / 1000) % 60;
 	fResult = sound_iterator->second->getLength(&length, FMOD_TIMEUNIT_MS);
-	*data += "\nLength: " + std::to_string(length);
-	float volume;
-	float balance;
+	int totalMins = (length / 1000) / 60;
+	int totalSecs = (length / 1000) % 60;
+
+	std::string playedMinutes, playedSeconds, totalMinutes, totalSeconds;
+	if (minutes < 10)
+		playedMinutes = "0" + std::to_string(minutes);
+	else playedMinutes = std::to_string(minutes);
+
+	if (seconds < 10)
+		playedSeconds = "0" + std::to_string(seconds);
+	else playedSeconds = std::to_string(seconds);
+
+	if (totalMins < 10)
+		totalMinutes = "0" + std::to_string(totalMins);
+	else totalMinutes = std::to_string(totalMins);
+
+	if (totalSecs < 10)
+		totalSeconds = "0" + std::to_string(totalSecs);
+	else totalSeconds = std::to_string(totalSecs);
+
+	*data += "\n\n\t" + playedMinutes + " : " + playedSeconds +
+		" / " + totalMinutes + " : " + totalSeconds;
+
+	float volume = 0;
+	channel->getVolume(&volume);
+	fResult = channelGroupIterator->second->grp_ptr->getVolume(&volume);
+	ErrorCheck(true);
+	*data += "\n\n\tVolume = " + std::to_string(volume);
+	float balance = channelGroupIterator->second->current_pan;
+	*data += "\n\n\tBalance = " + std::to_string(balance);
 }
 
-bool FModHandler::CreateDsp(const std::string& name, FMOD_DSP_TYPE dspType, const float value) 
+bool FModHandler::CreateDsp(const std::string& name, FMOD_DSP_TYPE dspType, const float value)
 {
 	FMOD::DSP* dsp;
 
@@ -430,6 +494,35 @@ bool FModHandler::RemoveDspEffect(const std::string& channelGroupName, const std
 	if (!ErrorCheck(channelGroupIterator->second->grp_ptr->removeDSP(dspEffectIterator->second)))
 		return false;
 	return true;
+}
+
+bool FModHandler::PlayPauseSound(const std::string& channelName, S_Audio* sAudio)
+{
+	if (sAudio->soundFileType == SFX)
+		return false;
+	const auto channelGroupIterator = channelGroups.find(channelName);
+	if (channelGroupIterator == channelGroups.end())
+		return false;
+
+	FMOD::Channel* channel;
+	channelGroupIterator->second->grp_ptr->getChannel(1, &channel);
+	bool paused = false;
+	fResult = channelGroupIterator->second->grp_ptr->getPaused(&paused);
+	ErrorCheck(true);
+	if (fResult == FMOD_OK)
+	{
+		float volume;
+		channelGroupIterator->second->grp_ptr->getVolume(&volume);
+		std::cout << volume;
+		
+		paused = !paused;
+		sAudio->playing = !paused;
+		fResult = channelGroupIterator->second->grp_ptr->setPaused(paused);
+		ErrorCheck(true);
+
+		return true;
+	}
+	return false;
 }
 
 

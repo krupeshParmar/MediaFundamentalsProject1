@@ -6,12 +6,14 @@
 
 #include <map>
 #include <string>
+#include "S_Audio.h"
 
 struct ChannelGroup
 {
 	FMOD::ChannelGroup* grp_ptr;
 	float current_pan;
 	float pitch = 1.f;
+	float speed;
 };
 
 class FModHandler
@@ -41,18 +43,22 @@ public:
 	bool SetChannelGroupPan(const std::string& name, float pan);
 	bool GetChannelGroupPitch(const std::string& name, float* pitch);
 	bool SetChannelGroupPitch(const std::string& name, float pitch);
+	bool GetChannelGroupFrequency(const std::string& name, float* frequency);
+	bool SetChannelGroupFrequency(const std::string& name, float frequency);
 
 	bool GetChannelGroupEnabled(const std::string& name, bool* enabled);
 	bool SetChannelGroupEnabled(const std::string& name, bool enabled);
 
 	bool CreateSound(const std::string& name, const std::string& path, const int mode);
 	bool PlaySound(const std::string& soundName, const std::string& channelGroupName);
-	bool GetSoundData(const std::string& soundName, std::string* data);
+	bool GetSoundData(const std::string& soundName,std::string& channelName, std::string* data);
 
 	bool CreateDsp(const std::string& name, FMOD_DSP_TYPE dspType, const float value);
 	bool GetDsp(const std::string& name, FMOD::DSP** dsp);
 	bool AddDspEffect(const std::string& channelGroupName, const std::string& effectName);
 	bool RemoveDspEffect(const std::string& channelGroupname, const std::string& effectName);
+
+	bool PlayPauseSound(const std::string& channelName, S_Audio* sAudio);
 
 	bool LoopSound(const std::string& soundName);
 	FMOD::Sound* GetSound(const std::string& soundName);
