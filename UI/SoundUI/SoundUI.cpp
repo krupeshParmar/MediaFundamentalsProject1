@@ -115,11 +115,6 @@ void SoundUI::Render(std::vector<S_Audio*>* soundsList,int selectedSound)
 			{
 				std::cout << "Failed to set group enabled value" << std::endl;
 			}
-			if (sAudio->soundFileType == SFX)
-			{
-				ImGui::EndChild();
-				continue;
-			}
 
 			/*Balance (PAN)*/
 			if (!fmodHandler->GetChannelGroupPan(sAudio->channelName, &(channelGroup->current_pan)))

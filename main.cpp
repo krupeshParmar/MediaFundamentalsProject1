@@ -239,6 +239,12 @@ void key_callback(GLFWwindow* window, const int key, int scancode, const int act
 
 int main()
 {
+	std::cout << "\nLoad uncompressed sounds: Press 1";
+	std::cout << "\nLoad compressed sounds: Press 2";
+	int choice;
+	std::cout << "\nChoice: ";
+	std::cin >> choice;
+	loadSounds("./sounds/", choice);
 	glfwInit();
 	window = glfwCreateWindow(1920, 1080, "Media", nullptr, nullptr);
 
@@ -272,13 +278,6 @@ int main()
 	}
 
 	printf("Initialize successful");
-
-	std::cout << "\nLoad uncompressed sounds: Press 1";
-	std::cout << "\nLoad compressed sounds: Press 2";
-	int choice;
-	std::cout << "\nChoice: ";
-	std::cin >> choice;
-	loadSounds("./sounds/", choice);
 
 	if (!fmodHandler.CreateChannelGroup("master"))
 	{
